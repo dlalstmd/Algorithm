@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int divide(int a[], int p, int q);
+
+int merge(int a[], int p, int k, int q);
+
+int main()
+{
+	int n = 0;
+
+	cin >> n;
+
+	int A[100] = { 0 };
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> A[i];
+	}
+
+	divide(A, 0, n);
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << A[i] << ' ';
+	}
+}
+
+int divide(int a[], int p, int q)
+{
+	if(q-p <= 0)return;
+
+	int k = (p + q) /2;
+
+	divide(a, p, k);
+	divide(a, k + 1, q);
+
+	merge(a, p, k, q);
+}
+
+int merge(int a[], int p, int k, int q)
+{
+	int i = p;
+	int j = k+1;
+
+	vector<int> C;
+
+	while (i <= k && j <= q)
+	{
+		if (a[i] > a[j])
+		{
+			C.push_back(a[j++]);
+		}
+		else
+		{
+			C.push_back(a[i++]);
+		}
+	}
+	while (i <= k)
+	{
+		C.push_back(a[i++]);
+	}
+	while (j <= q)
+	{
+		C.push_back(a[j++]);
+	}
+}
